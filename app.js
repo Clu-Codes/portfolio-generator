@@ -5,12 +5,30 @@ const promptUser = () => {
         {
             type: 'input',
             name: 'name',
-            message: 'What is your name?'
+            message: 'What is your name?',
+            // notice the validate method's arugment, nameInput. 
+            validate: nameInput => {
+                // conditional to determine outcome of validation check
+                if (nameInput) {
+                    return true;
+                } else {
+                    console.log('Please enter your name!');
+                    return false;
+                }
+            }
         },
         {
             type: 'input',
             name: 'github',
-            message: 'Enter your Github Username'
+            message: 'Enter your Github Username',
+            validate: githubInput => {
+                if (githubInput) {
+                    return true
+                } else {
+                    console.log('Please enter your Github name!');
+                    return false;
+                }
+            }
         },
         {
             type: 'input',
@@ -41,7 +59,15 @@ const promptProject = portfolioData => {
         {
             type: 'input',
             name: 'description',
-            message: 'Provide a description of the project (Required)'
+            message: 'Provide a description of the project (Required)',
+            validate: projectDetails => {
+                if (projectDetails) {
+                    return true
+                } else {
+                    console.log('Please provide a description of your project!');
+                    return false
+                }
+            }
         },
         {
             type: 'checkout',
@@ -52,7 +78,15 @@ const promptProject = portfolioData => {
         {
             type: 'input',
             name: 'github link',
-            message: 'Enter the Github link to your project. (Required)'
+            message: 'Enter the Github link to your project. (Required)',
+            validate: githubLink => {
+                if (githubLink) {
+                    return true
+                } else {
+                    console.log('Please share your Github link!');
+                    return false
+                }
+            }
         },
         {
             type: 'confirm',
