@@ -1,4 +1,25 @@
-const generatePage = (name, github) => {
+const { generate } = require("rxjs");
+
+// create the about section
+const generateAbout = aboutText => {
+    if (!aboutText) {
+        return '';
+    }
+    return `
+        <section class="my-3" id="about">
+            <h2 class="text-dark bg-primary p-2 display-inline-block">About Me</h2>
+            <p>${aboutText}</p>
+        </section>
+    `;
+};
+
+module.exports = templateData => {
+    // destructure projects and about data from templateData based on their property key names
+    // the elipses refers to 'rest' operator, which is taking the "rest" of templateData's data and storing it in a new object, called header
+    const { projects, about, ...header } = templateData;
+    // console.log(projects);
+    // console.log(`About: ${about}`);
+    // console.log(`Header: ${header}`);
     return `
         <!DOCTYPE html>
         <html lang="en">
@@ -7,14 +28,31 @@ const generatePage = (name, github) => {
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <meta http-equiv="X-UA-Compatible" content="ie=edge">
             <title>Portfolio Demo</title>
+            <link rel="stylesheet" href="https://cdn.js.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+            <link href="https://fonts.googleapis.com/css?family=Public+Sans:300i,300,500&display=swap" rel="stylesheet">
+            <link rel="stylesheet" href="style.css">
         </head>
 
         <body>
-            <h1>${name}</h1>
-            <h2><a href="https://github/${github}">Github</a></h2>
+            <header>
+            <div class="container flex-row justify-space-between align-center py-3">
+                <h1 class="page-title text-secondary bg-dark py-2 px-3">${header.name}</h1>
+                <nav class="flex-row">
+                <a class="ml-2 my-1 px-2 py-1 bg-secondary text-dark" href="https://github.com/${
+                    header.github
+                }">GitHub</a>
+                </nav>
+            </div>
+            </header>
+            <main class="container my-5">
+                ${generateAbout(about)}
+            </main>
+            <footer class="container text-center py-3">
+                <h3 class="text-dark">&copy; ${new Date().getFullYear()} by ${header.name}</h3>
+            </footer>
         </body>
         </html>
     `;
 };
 
-module.exports = generatePage;
+// module.exports = generatePage;
